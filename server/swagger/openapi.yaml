@@ -12,11 +12,7 @@ paths:
     post:
       tags:
         - account
-      summary: Update an existing pet
-      description: Update an existing pet by Id
-      operationId: updatePet
       requestBody:
-        description: Update an existent pet in the store
         content:
           application/json:
             schema:
@@ -31,6 +27,25 @@ paths:
                 $ref: '#/components/schemas/RegisterResponse'
         '400':
           description: Bad Request
+  /account/login:
+    post:
+      tags:
+        - account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequestBody'
+        required: true
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Bad Request
 components:
   schemas:
     AccountRequestBody:
@@ -38,6 +53,7 @@ components:
       properties:
         email:
           type: string
+          example: string@gmail.com
         password:
           type: string
     RegisterResponse:
@@ -46,6 +62,17 @@ components:
         message:
           type: string
           example: Registry Successfully
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Login Successfully
+        data:
+          type: object
+          properties:
+            token:
+              type: string
   securitySchemes:
     petstore_auth:
       type: oauth2

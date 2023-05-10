@@ -13,7 +13,7 @@ accountController.post('/registry', accountValidator, async (req: Request, res: 
   try {
     const { email, password } = req.body
 
-    await AccountService.getInstance().insert(email, password)
+    await AccountService.getInstance().registry(email, password)
 
     res.json({
       message: 'Registry Successfully'
@@ -23,8 +23,19 @@ accountController.post('/registry', accountValidator, async (req: Request, res: 
   }
 })
 
-accountController.post('/login', (req: Request, res: Response) => {
-  res.send('login')
+accountController.post('/login', accountValidator, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, password } = req.body
+
+    res.json({
+      message: 'Login Successfully',
+      data: {
+        token: await AccountService.getInstance().login(email, password)
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 export { accountController }

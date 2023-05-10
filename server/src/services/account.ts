@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcryptjs'
+import * as jwt from 'jsonwebtoken'
 
 import DBConnection from '../utils/dbConnection'
 import { CustomError } from '../common'
@@ -13,7 +14,7 @@ export class AccountService {
     return AccountService.#instance
   }
 
-  public async insert(email: string, password: string) {
+  public async registry(email: string, password: string) {
     try {
       // Hash Password
       const passwordHashed = bcrypt.hashSync(password)
@@ -26,8 +27,29 @@ export class AccountService {
 
       // Validator Email exists
       if (result.rowCount === 0) {
-        throw new CustomError(400, { message: 'This email exists' })
+        throw new CustomError(400, { message: 'Email exists' })
       }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async login(email: string, password: string) {
+    try {
+      const result = await DBConnection.getInstance().query('SELECT * FROM app.account WHERE email = $1 LIMIT 1', [
+        email
+      ])
+
+      if (result.rows.length === 0 || !bcrypt.compareSync(password, result.rows[0].password)) {
+        throw new CustomError(400, { message: 'Email does not exist or Password is not correct' })
+      }
+
+      return jwt.sign(
+        {
+          email: result.rows[0].email
+        },
+        process.env.JWT_KEY || ''
+      )
     } catch (error) {
       throw error
     }
