@@ -5,7 +5,7 @@ import fs from 'fs'
 import * as YAML from 'yaml'
 import * as bodyParser from 'body-parser';
 
-import { accountController } from './controllers'
+import { accountController, videoController } from './controllers'
 import { errorHandlerMiddleware } from './middlewares'
 
 const swaggerDocument = YAML.parse(fs.readFileSync(`${__dirname}/../swagger/openapi.yaml`, 'utf8'))
@@ -20,6 +20,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Import Controllers
 app.use('/account', accountController)
+app.use('/video', videoController)
 
 // Error Handler
 app.use(errorHandlerMiddleware)

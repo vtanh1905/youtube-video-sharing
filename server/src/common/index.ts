@@ -1,3 +1,5 @@
+import { Request } from 'express'
+
 export class CustomError {
   status: number
   error: any
@@ -6,4 +8,8 @@ export class CustomError {
     this.status = status
     this.error = error
   }
+}
+
+export interface CustomRequest extends Request {
+  user: string
 }
