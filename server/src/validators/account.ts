@@ -5,11 +5,14 @@ export const accountValidator: any = [
   checkSchema({
     email: {
       in: ['body'],
-      isString: true
+      isEmail: true
     },
     password: {
       in: ['body'],
-      isString: true
+      isLength: {
+        errorMessage: 'Password should be at least 6 chars long and 15 maximum',
+        options: { min: 6, max: 15 }
+      }
     }
   }),
   checkSchemaErrorMiddleware

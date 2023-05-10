@@ -1,16 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { validationResult } from 'express-validator'
 
-export class CustomError extends Error {
-  status: number
-  error: any
-
-  constructor(status: number, error: any, message?: string) {
-    super(message || '')
-    this.status = status
-    this.error = error
-  }
-}
+import { CustomError } from '../common';
 
 export const checkSchemaErrorMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req)

@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import express, { Express, NextFunction, Request, Response } from 'express'
+import express, { Express } from 'express'
 import * as swaggerUi from 'swagger-ui-express'
 import fs from 'fs'
 import * as YAML from 'yaml'
