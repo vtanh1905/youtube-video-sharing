@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 
-import { accountValidator } from '../validators';
+import { accountValidator } from '../validators'
 
 const accountController: Router = Router()
 
