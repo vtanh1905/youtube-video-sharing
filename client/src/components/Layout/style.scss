@@ -1,0 +1,16 @@
+.header-content {
+  display: flex;
+  justify-content: space-between;
+
+  .header-text-logo {
+    color: white;
+    font-weight: 900;
+    font-size: 40px;
+    margin: 0;
+  }
+  
+  .login-form {
+    display: inline-flex;
+    margin-top: 16px;
+  }
+}
