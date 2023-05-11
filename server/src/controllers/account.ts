@@ -5,10 +5,6 @@ import { AccountService } from '../services'
 
 const accountController: Router = Router()
 
-accountController.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server')
-})
-
 accountController.post('/registry', accountValidator, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body

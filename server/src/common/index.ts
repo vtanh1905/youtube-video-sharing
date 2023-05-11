@@ -10,6 +10,10 @@ export class CustomError {
   }
 }
 
+export interface User {
+  email: string
+}
+
 export interface CustomRequest extends Request {
-  user: string
+  user: User
 }

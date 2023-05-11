@@ -2,11 +2,6 @@ openapi: 3.0.3
 info:
   title: Youtube Video Sharing API
   version: 0.0.1
-tags:
-  - name: account
-    description: Everything about your Pets
-  - name: video
-    description: Operations about user
 paths:
   /account/registry:
     post:
@@ -46,6 +41,52 @@ paths:
                 $ref: '#/components/schemas/LoginResponse'
         '400':
           description: Bad Request
+  /video:
+    get:
+      tags:
+        - video
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: offset
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVideoResponse'
+        '400':
+          description: Bad Request
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - video
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: https://www.youtube.com/watch?v=videoId
+        required: true
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostVideoResponse'
+        '400':
+          description: Bad Request
 components:
   schemas:
     AccountRequestBody:
@@ -73,16 +114,33 @@ components:
           properties:
             token:
               type: string
+    VideoEntity:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        email:
+          type: string
+    GetVideoResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Get Video Successfully
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VideoEntity'
+    PostVideoResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Share Video Successfully
   securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
