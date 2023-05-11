@@ -1,25 +1,25 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import Layout from "../components/Layout";
-import HomePage from "./Home";
-import RegistryPage from "./Registry";
-import ShareVideoPage from "./ShareVideo";
+import Layout from '../components/Layout'
+import HomePage from './Home'
+import RegistryPage from './Registry'
+import ShareVideoPage from './ShareVideo'
 
 const routes = [
   {
-    path: "/",
-    component: (props?: any) => <HomePage {...props} />,
+    path: '/',
+    component: (props?: any) => <HomePage {...props} />
   },
   {
-    path: "/registry",
-    component: (props?: any) => <RegistryPage {...props} />,
+    path: '/registry',
+    component: (props?: any) => <RegistryPage {...props} />
   },
   {
-    path: "/share-video",
-    component: (props?: any) => <ShareVideoPage {...props} />,
-  },
-];
+    path: '/share-video',
+    component: (props?: any) => <ShareVideoPage {...props} />
+  }
+]
 
 const Index = () => {
   return (
@@ -34,7 +34,7 @@ const Index = () => {
         </div>
       </Layout>
     </Router>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index
