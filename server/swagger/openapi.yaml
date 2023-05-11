@@ -77,6 +77,8 @@ paths:
                 url:
                   type: string
                   example: https://www.youtube.com/watch?v=videoId
+                description:
+                  type: string
         required: true
       responses:
         '200':

@@ -37,4 +37,17 @@ export class VideoService {
       throw error
     }
   }
+
+  public async select(limit: number, offset: number) {
+    try {
+      const result = await DBConnection.getInstance().query('SELECT * FROM app.video LIMIT $1 OFFSET $2', [
+        limit,
+        offset
+      ])
+
+      return result.rows
+    } catch (error) {
+      throw error
+    }
+  }
 }
