@@ -6,7 +6,8 @@ import { FormInstance, notification } from 'antd'
 import { Layout } from './components'
 import { HomePage, RegistryPage, ShareVideoPage } from './pages'
 import { UserStore } from './stores'
-import { axiosInstance, cookies } from './utils'
+import { cookies } from './utils'
+import { loginApi } from './apis'
 
 const routes = [
   {
@@ -30,16 +31,13 @@ const App = () => {
   const onLogin = async (values: any, form: FormInstance) => {
     const { email, password } = values
     try {
-      const { data } = await axiosInstance().post('/account/login', {
-        email,
-        password
-      })
+      const { data } = await loginApi(email, password)
       // Set User
       setUser({
         email
       })
       // Set Token to Cookie
-      cookies.set('token', data.data.token)
+      cookies.set('token', data.token)
     } catch (error) {
       api.error({
         message: `Error`,

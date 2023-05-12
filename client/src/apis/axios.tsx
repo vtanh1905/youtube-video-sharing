@@ -1,10 +1,10 @@
 import axios, { AxiosInstance } from 'axios'
 
-import { cookies } from './cookies'
+import { cookies } from '../utils/cookies'
 
 export const axiosInstance = (): AxiosInstance => {
   const instance = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: process.env.API_URL
   })
 
   const token = cookies.get('token')

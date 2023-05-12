@@ -1,40 +1,45 @@
-const path = require("path");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+require('dotenv').config({ path: './.env' })
+const webpack = require('webpack')
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  mode: "development",
-  entry: "./src/index.tsx",
+  mode: process.env.ENVIRONMENT,
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.s?[ac]ss$/i,
-        use: ["style-loader", "css-loader", "sass-loader"],
-      },
-    ],
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js']
   },
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "build"),
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'build')
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [{ from: path.join(__dirname, "public") }],
+      patterns: [{ from: path.join(__dirname, 'public') }]
     }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env)
+    })
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, "build"),
+      directory: path.join(__dirname, 'build')
     },
     historyApiFallback: true,
     compress: true,
-    port: 8000,
-  },
-};
+    port: process.env.PORT
+  }
+}
