@@ -1,12 +1,14 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import 'antd/dist/reset.css'
 
 import App from './app'
+import { UserStoreProvider } from './stores'
 
-ReactDOM.render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <UserStoreProvider>
+      <App />
+    </UserStoreProvider>
+  </React.StrictMode>
 )

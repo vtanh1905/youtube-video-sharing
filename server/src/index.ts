@@ -3,7 +3,8 @@ import express, { Express } from 'express'
 import * as swaggerUi from 'swagger-ui-express'
 import fs from 'fs'
 import * as YAML from 'yaml'
-import * as bodyParser from 'body-parser';
+import * as bodyParser from 'body-parser'
+import cors from 'cors'
 
 import { accountController, videoController } from './controllers'
 import { errorHandlerMiddleware } from './middlewares'
@@ -14,6 +15,11 @@ const app: Express = express()
 const port = process.env.PORT
 
 app.use(bodyParser.json())
+app.use(
+  cors({
+    origin: '*'
+  })
+)
 
 // Setup Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
