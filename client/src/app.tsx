@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import axios from 'axios'
+
 import { FormInstance, notification } from 'antd'
 
 import { Layout } from './components'
 import { HomePage, RegistryPage, ShareVideoPage } from './pages'
 import { UserStore } from './stores'
+import { axiosInstance, cookies } from './utils'
 
 const routes = [
   {
@@ -29,7 +30,7 @@ const App = () => {
   const onLogin = async (values: any, form: FormInstance) => {
     const { email, password } = values
     try {
-      const { data } = await axios.post('http://localhost:3000/account/login', {
+      const { data } = await axiosInstance().post('/account/login', {
         email,
         password
       })
@@ -38,7 +39,7 @@ const App = () => {
         email
       })
       // Set Token to Cookie
-      document.cookie = `token=${data.data.token}`
+      cookies.set('token', data.data.token)
     } catch (error) {
       api.error({
         message: `Error`,
@@ -51,7 +52,7 @@ const App = () => {
 
   const onLogout = () => {
     setUser(null)
-    document.cookie = ''
+    cookies.remove('token')
   }
 
   return (
