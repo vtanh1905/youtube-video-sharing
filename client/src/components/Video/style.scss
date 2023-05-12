@@ -1,0 +1,39 @@
+.video {
+  display: flex;
+  gap: 1vw;
+  height: 390px;
+  width: 50vw;
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 60vw;
+  }
+
+  @media (max-width: 1024px) {
+    width: 80vw;
+  }
+
+  .video-iframe {
+    width: 69%;
+  }
+
+  .video-content {
+    width: 29%;
+
+    .title {
+      margin: 0;
+      font-weight: 700;
+      color: red;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .description {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 14;
+      white-space: wrap;
+    }
+  }
+}

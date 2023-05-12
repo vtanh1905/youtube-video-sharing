@@ -1,5 +1,5 @@
 .layout {
-  height: 100vh;
+  min-height: 100vh;
 
   .header {
     position: sticky;
@@ -30,6 +30,6 @@
   }
 
   .content {
-    padding: 25px 50px;
+    padding: 25px 0;
   }
 }
