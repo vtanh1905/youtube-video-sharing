@@ -1,12 +1,37 @@
 import React from 'react'
-import { Card, Form, Input, Button } from 'antd'
+import { Card, Form, Input, Button, notification } from 'antd'
 import './style.scss'
+import { registryApi } from '../../apis'
+import { useNavigate } from 'react-router-dom'
 
 const RegistryPage = () => {
+  const [form] = Form.useForm()
+  const navigate = useNavigate()
+
+  const onRegistry = async (values: any) => {
+    const { email, password } = values
+    try {
+      const result = await registryApi(email, password)
+      notification.success({
+        message: `Success`,
+        description: result.message || 'Successful',
+        placement: 'bottomRight'
+      })
+      navigate('/')
+    } catch (error) {
+      notification.error({
+        message: `Error`,
+        description: error.response.data.error.message || 'Login Failed',
+        placement: 'bottomRight'
+      })
+      form.resetFields()
+    }
+  }
+
   return (
     <div className='registry-page'>
       <Card title='Registry'>
-        <Form layout='vertical' className='registry-form'>
+        <Form layout='vertical' className='registry-form' form={form} onFinish={onRegistry}>
           <Form.Item
             label='Email'
             name='email'

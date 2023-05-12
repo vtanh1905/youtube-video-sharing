@@ -25,7 +25,6 @@ const routes = [
 ]
 
 const App = () => {
-  const [api, contextHolder] = notification.useNotification()
   const [user, setUser] = useContext(UserStore)
 
   const onLogin = async (values: any, form: FormInstance) => {
@@ -39,7 +38,7 @@ const App = () => {
       // Set Token to Cookie
       cookies.set('token', data.token)
     } catch (error) {
-      api.error({
+      notification.error({
         message: `Error`,
         description: error.response.data.error.message || 'Login Failed',
         placement: 'bottomRight'
@@ -55,7 +54,6 @@ const App = () => {
 
   return (
     <Router>
-      {contextHolder}
       <Layout user={user} onLogout={onLogout} onLogin={onLogin}>
         <div>
           <Routes>
