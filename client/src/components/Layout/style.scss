@@ -1,16 +1,35 @@
-.header-content {
-  display: flex;
-  justify-content: space-between;
+.layout {
+  height: 100vh;
 
-  .header-text-logo {
-    color: white;
-    font-weight: 900;
-    font-size: 40px;
-    margin: 0;
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+
+      .header-text-logo {
+        color: #ffffff;
+        font-weight: 900;
+        font-size: 2vw;
+        margin: 0;
+      }
+
+      .login-form {
+        display: inline-flex;
+        margin-top: 16px;
+      }
+
+      .user-info {
+        color: #ffffff;
+      }
+    }
   }
 
-  .login-form {
-    display: inline-flex;
-    margin-top: 16px;
+  .content {
+    padding: 25px 50px;
   }
 }
