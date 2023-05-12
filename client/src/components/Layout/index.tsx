@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout as LayoutAntd, Button, Space } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import { HomeOutlined } from '@ant-design/icons'
 import './style.scss'
 import { useNavigate } from 'react-router-dom'
@@ -47,7 +47,9 @@ const Layout = (props: any) => {
         </div>
       </Header>
       <Content>
-        <div className='content'>{props.children}</div>
+        <div className='content'>
+          <Outlet />
+        </div>
       </Content>
     </LayoutAntd>
   )

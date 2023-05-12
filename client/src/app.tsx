@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { FormInstance, notification } from 'antd'
 
-import { Layout } from './components'
+import { Layout, Authenticate } from './components'
 import { HomePage, RegistryPage, ShareVideoPage } from './pages'
 import { UserStore } from './stores'
 import { cookies } from './utils'
@@ -12,15 +12,16 @@ import { loginApi } from './apis'
 const routes = [
   {
     path: '/',
-    component: (props?: any) => <HomePage {...props} />
+    component: <HomePage />
   },
   {
     path: '/registry',
-    component: (props?: any) => <RegistryPage {...props} />
+    component: <RegistryPage />
   },
   {
     path: '/share-video',
-    component: (props?: any) => <ShareVideoPage {...props} />
+    component: <ShareVideoPage />,
+    authenticate: true
   }
 ]
 
@@ -54,15 +55,17 @@ const App = () => {
 
   return (
     <Router>
-      <Layout user={user} onLogout={onLogout} onLogin={onLogin}>
-        <div>
-          <Routes>
-            {routes.map((route, i) => (
-              <Route path={route.path} key={i} element={route.component()} />
-            ))}
-          </Routes>
-        </div>
-      </Layout>
+      <Routes>
+        <Route element={<Layout user={user} onLogout={onLogout} onLogin={onLogin} />}>
+          {routes.map((route, i) => (
+            <Route
+              path={route.path}
+              key={i}
+              element={!route.authenticate ? route.component : <Authenticate>{route.component}</Authenticate>}
+            />
+          ))}
+        </Route>
+      </Routes>
     </Router>
   )
 }
