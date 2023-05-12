@@ -5,8 +5,8 @@ import './style.scss'
 const RegistryPage = () => {
   return (
     <div className='registry-page'>
-      <Card title='Registry' style={{ width: '20vw' }}>
-        <Form layout='vertical' labelCol={{ span: 8 }}>
+      <Card title='Registry'>
+        <Form layout='vertical' className='registry-form'>
           <Form.Item
             label='Email'
             name='email'
@@ -23,8 +23,8 @@ const RegistryPage = () => {
             <Input.Password />
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 9 }}>
-            <Button type='primary' htmlType='submit'>
+          <Form.Item style={{ textAlign: 'center' }}>
+            <Button type='primary' htmlType='submit' style={{ width: '30%' }}>
               Submit
             </Button>
           </Form.Item>

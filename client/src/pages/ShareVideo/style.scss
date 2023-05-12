@@ -1,16 +1,16 @@
-.registry-page {
+.share-video-page {
   display: flex;
   justify-content: center;
 
-  .registry-form {
-    width: 20vw;
+  .share-video-form {
+    width: 30vw;
 
     @media (min-width: 1025px) and (max-width: 1440px) {
-      width: 40vw;
+      width: 50vw;
     }
   
     @media (max-width: 1024px) {
-      width: 60vw;
+      width: 70vw;
     }
   }
 }
