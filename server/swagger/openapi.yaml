@@ -3,7 +3,7 @@ info:
   title: Youtube Video Sharing API
   version: 0.0.1
 paths:
-  /account/registry:
+  /api/account/registry:
     post:
       tags:
         - account
@@ -22,7 +22,7 @@ paths:
                 $ref: '#/components/schemas/RegisterResponse'
         '400':
           description: Bad Request
-  /account/login:
+  /api/account/login:
     post:
       tags:
         - account
@@ -41,7 +41,7 @@ paths:
                 $ref: '#/components/schemas/LoginResponse'
         '400':
           description: Bad Request
-  /video:
+  /api/video:
     get:
       tags:
         - video

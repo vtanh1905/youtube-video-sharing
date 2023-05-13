@@ -5,6 +5,7 @@ import fs from 'fs'
 import * as YAML from 'yaml'
 import * as bodyParser from 'body-parser'
 import cors from 'cors'
+import path from 'path';
 
 import { accountController, videoController } from './controllers'
 import { errorHandlerMiddleware } from './middlewares'
@@ -24,9 +25,15 @@ app.use(
 // Setup Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-// Import Controllers
-app.use('/account', accountController)
-app.use('/video', videoController)
+// Import API Controllers
+app.use('/api/account', accountController)
+app.use('/api/video', videoController)
+
+// Host React Application
+app.use(express.static(path.resolve(__dirname, '../../client/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
+});
 
 // Error Handler
 app.use(errorHandlerMiddleware)
