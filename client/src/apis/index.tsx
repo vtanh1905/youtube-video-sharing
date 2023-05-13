@@ -15,3 +15,10 @@ export const registryApi = async (email: string, password: string) => {
   })
   return data
 }
+
+export const getAccountInfoApi = async (token: string) => {
+  const { data } = await axiosInstance().post('/account/info', {
+    token
+  })
+  return data
+}

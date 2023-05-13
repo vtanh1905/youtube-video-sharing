@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { FormInstance, notification } from 'antd'
@@ -7,7 +7,7 @@ import { Layout, Authenticate } from './components'
 import { HomePage, RegistryPage, ShareVideoPage } from './pages'
 import { UserStore } from './stores'
 import { cookies } from './utils'
-import { loginApi } from './apis'
+import { getAccountInfoApi, loginApi } from './apis'
 
 const routes = [
   {
@@ -16,17 +16,38 @@ const routes = [
   },
   {
     path: '/registry',
-    component: <RegistryPage />
+    component: <RegistryPage />,
+    authenticate: {
+      mustLogin: false
+    }
   },
   {
     path: '/share-video',
     component: <ShareVideoPage />,
-    authenticate: true
+    authenticate: {
+      mustLogin: true
+    }
   }
 ]
 
 const App = () => {
   const [user, setUser] = useContext(UserStore)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Re-login if token exists in cookie
+    const token = cookies.get('token')
+    if (token) {
+      getAccountInfoApi(token)
+        .then((result) => {
+          setUser(result.data)
+          setLoading(false)
+        })
+        .catch(console.error)
+    } else {
+      setLoading(false)
+    }
+  }, [])
 
   const onLogin = async (values: any, form: FormInstance) => {
     const { email, password } = values
@@ -56,12 +77,12 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route element={<Layout user={user} onLogout={onLogout} onLogin={onLogin} />}>
+        <Route element={<Layout user={user} loading={loading} onLogout={onLogout} onLogin={onLogin} />}>
           {routes.map((route, i) => (
             <Route
               path={route.path}
               key={i}
-              element={!route.authenticate ? route.component : <Authenticate>{route.component}</Authenticate>}
+              element={!route.authenticate ? route.component : <Authenticate options={route.authenticate}>{route.component}</Authenticate>}
             />
           ))}
         </Route>

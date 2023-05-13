@@ -1,7 +1,7 @@
 import React from 'react'
-import { Layout as LayoutAntd, Button, Space } from 'antd'
+import { Layout as LayoutAntd, Button, Space, Spin } from 'antd'
 import { Link, Outlet } from 'react-router-dom'
-import { HomeOutlined } from '@ant-design/icons'
+import { HomeOutlined, LoadingOutlined } from '@ant-design/icons'
 import './style.scss'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,9 +10,17 @@ import Login from '../Login'
 const { Header, Content } = LayoutAntd
 
 const Layout = (props: any) => {
-  const { user, onLogin, onLogout } = props
+  const { user, loading, onLogin, onLogout } = props
 
   const navigate = useNavigate()
+
+  if (loading) {
+    return (
+      <div className='loading-container'>
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} />
+      </div>
+    )
+  }
 
   return (
     <LayoutAntd className='layout'>
@@ -23,7 +31,6 @@ const Layout = (props: any) => {
               <HomeOutlined /> Funny Movies
             </h1>
           </Link>
-
           {!user ? (
             <div className='login-form'>
               <Login onSubmit={onLogin} />
