@@ -1,6 +1,7 @@
-import DBConnection from '../utils/dbConnection'
+import { DBConnection } from '../utils'
 
 import { CustomError } from '../common'
+import { eventEmitter } from '../utils'
 
 export class VideoService {
   static #instance: VideoService
@@ -39,6 +40,12 @@ export class VideoService {
       if (result.rowCount === 0) {
         throw new CustomError(400, { message: 'Video exists' })
       }
+
+      // Emit Event New Video
+      eventEmitter.emit('NEW_VIDEO', {
+        title,
+        email
+      })
     } catch (error) {
       throw error
     }

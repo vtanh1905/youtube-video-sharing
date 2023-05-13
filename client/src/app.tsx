@@ -6,7 +6,7 @@ import { FormInstance, notification } from 'antd'
 import routes from './routes'
 import { Layout, Authenticate } from './components'
 import { UserStore } from './stores'
-import { cookies } from './utils'
+import { cookies, websocket } from './utils'
 import { getAccountInfoApi, loginApi } from './apis'
 
 const App = () => {
@@ -25,13 +25,29 @@ const App = () => {
           console.error(error)
           // Clear Cookie if the token is not expire or not valid
           cookies.remove('token')
-        }).finally(() => {
+        })
+        .finally(() => {
           setLoading(false)
         })
     } else {
       setLoading(false)
     }
   }, [])
+
+  useEffect(() => {
+    //Listen Websocket For New Video
+    if (user) {
+      websocket.on('message', (data) => {
+        if (user.email !== data.email) {
+          notification.info({
+            message: data.title,
+            description: `Shared by ${data.email}`,
+            placement: 'bottomRight'
+          })
+        }
+      })
+    }
+  }, [user])
 
   const onLogin = async (values: any, form: FormInstance) => {
     const { email, password } = values

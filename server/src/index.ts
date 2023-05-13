@@ -5,10 +5,11 @@ import fs from 'fs'
 import * as YAML from 'yaml'
 import * as bodyParser from 'body-parser'
 import cors from 'cors'
-import path from 'path';
+import path from 'path'
 
 import { accountController, videoController } from './controllers'
 import { errorHandlerMiddleware } from './middlewares'
+import { webSocketListen } from './utils'
 
 const swaggerDocument = YAML.parse(fs.readFileSync(`${__dirname}/../swagger/openapi.yaml`, 'utf8'))
 
@@ -30,14 +31,17 @@ app.use('/api/account', accountController)
 app.use('/api/video', videoController)
 
 // Host React Application
-app.use(express.static(path.resolve(__dirname, '../../client/build')));
+app.use(express.static(path.resolve(__dirname, '../../client/build')))
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
-});
+  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'))
+})
 
 // Error Handler
 app.use(errorHandlerMiddleware)
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`)
 })
+
+// Bootstrap Websocket
+webSocketListen(server)

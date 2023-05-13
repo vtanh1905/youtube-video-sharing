@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
 
-import DBConnection from '../utils/dbConnection'
+import { DBConnection } from '../utils'
 import { CustomError } from '../common'
 
 export class AccountService {
