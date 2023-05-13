@@ -6,7 +6,7 @@ export const getVideoValidator: any = [
     limit: {
       in: ['query'],
       default: {
-        options: 5
+        options: 3
       },
       isInt: true
     },

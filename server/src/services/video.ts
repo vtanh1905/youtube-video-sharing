@@ -40,7 +40,7 @@ export class VideoService {
 
   public async select(limit: number, offset: number) {
     try {
-      const result = await DBConnection.getInstance().query('SELECT * FROM app.video LIMIT $1 OFFSET $2', [
+      const result = await DBConnection.getInstance().query('SELECT id, email, title, description  FROM app.video ORDER BY create_at DESC LIMIT $1 OFFSET $2', [
         limit,
         offset
       ])
