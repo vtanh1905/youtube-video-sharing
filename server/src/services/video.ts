@@ -12,21 +12,27 @@ export class VideoService {
     return VideoService.#instance
   }
 
-  public async insert(url: string, description: string, email: string) {
+  public async insert(url: string, email: string) {
     try {
       // Get VideoId
       const videoId = url.split('v=')[1]
 
+      // Get Data of Youtube Video
+      const req = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${process.env.GOOGLE_API_KEY}&part=snippet`
+      )
+      const video = await req.json()
+
       // Validator youtube video exists
-      const req = await fetch(`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`)
-      if (req.status !== 200) {
+      if (video.items.length === 0) {
         throw new CustomError(404, { message: 'Youtube video does not exist' })
       }
+      const { title, description } = video.items[0].snippet
 
       // Insert
       const result = await DBConnection.getInstance().query(
-        'INSERT INTO app.video (id, description, email) SELECT CAST($1 AS VARCHAR), CAST($2 AS VARCHAR), CAST($3 AS VARCHAR) WHERE NOT EXISTS (SELECT id FROM app.video WHERE id = $1)',
-        [videoId, description, email]
+        'INSERT INTO app.video (id, email, title, description, create_at) SELECT CAST($1 AS VARCHAR), CAST($2 AS VARCHAR), CAST($3 AS TEXT), CAST($4 AS TEXT), CAST($5 AS TIMESTAMP) WHERE NOT EXISTS (SELECT id FROM app.video WHERE id = $1)',
+        [videoId, email, title, description, new Date()]
       )
 
       // Validator Video exists
@@ -40,10 +46,10 @@ export class VideoService {
 
   public async select(limit: number, offset: number) {
     try {
-      const result = await DBConnection.getInstance().query('SELECT id, email, title, description  FROM app.video ORDER BY create_at DESC LIMIT $1 OFFSET $2', [
-        limit,
-        offset
-      ])
+      const result = await DBConnection.getInstance().query(
+        'SELECT id, email, title, description  FROM app.video ORDER BY create_at DESC LIMIT $1 OFFSET $2',
+        [limit, offset]
+      )
 
       return result.rows
     } catch (error) {

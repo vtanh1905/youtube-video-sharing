@@ -26,10 +26,10 @@ videoController.post(
   postVideoValidator,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { url, description } = req.body
+      const { url } = req.body
       const { email } = (req as CustomRequest).user
 
-      await VideoService.getInstance().insert(url, description, email)
+      await VideoService.getInstance().insert(url, email)
 
       res.json({
         message: 'Share Video Successfully'

@@ -8,10 +8,6 @@ export const postVideoValidator: any = [
       matches: {
         options: /^(https?\:\/\/)?((www\.)?youtube\.com|youtu\.be)\/watch\?v=[0-9a-zA-Z_-]+$/
       }
-    },
-    description: {
-      in: ['body'],
-      isString: true
     }
   }),
   checkSchemaErrorMiddleware
