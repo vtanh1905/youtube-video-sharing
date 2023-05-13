@@ -3,32 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { FormInstance, notification } from 'antd'
 
+import routes from './routes'
 import { Layout, Authenticate } from './components'
-import { HomePage, RegistryPage, ShareVideoPage } from './pages'
 import { UserStore } from './stores'
 import { cookies } from './utils'
 import { getAccountInfoApi, loginApi } from './apis'
-
-const routes = [
-  {
-    path: '/',
-    component: <HomePage />
-  },
-  {
-    path: '/registry',
-    component: <RegistryPage />,
-    authenticate: {
-      mustLogin: false
-    }
-  },
-  {
-    path: '/share-video',
-    component: <ShareVideoPage />,
-    authenticate: {
-      mustLogin: true
-    }
-  }
-]
 
 const App = () => {
   const [user, setUser] = useContext(UserStore)
@@ -82,7 +61,13 @@ const App = () => {
             <Route
               path={route.path}
               key={i}
-              element={!route.authenticate ? route.component : <Authenticate options={route.authenticate}>{route.component}</Authenticate>}
+              element={
+                !route.authenticate ? (
+                  route.component
+                ) : (
+                  <Authenticate options={route.authenticate}>{route.component}</Authenticate>
+                )
+              }
             />
           ))}
         </Route>
