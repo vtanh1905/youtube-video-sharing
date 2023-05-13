@@ -6,7 +6,7 @@ import { eventEmitter } from './eventEmitter'
 export const webSocketListen = (server: Server) => {
   const io = new WebSocket(server, {
     cors: {
-      origin: '*'
+      origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN
     }
   })
 

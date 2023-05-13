@@ -19,7 +19,7 @@ const port = process.env.PORT
 app.use(bodyParser.json())
 app.use(
   cors({
-    origin: '*'
+    origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN
   })
 )
 
