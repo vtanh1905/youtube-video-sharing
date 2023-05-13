@@ -14,6 +14,24 @@ export class AccountService {
     return AccountService.#instance
   }
 
+  public async getUserByEmail(email: string) {
+    try {
+      // Get Account
+      const result = await DBConnection.getInstance().query('SELECT email FROM app.account WHERE email=$1 LIMIT 1', [
+        email
+      ])
+
+      // Validate Account does not exist
+      if (result.rowCount === 0) {
+        throw new CustomError(400, { message: 'Email does not exist' })
+      }
+
+      return result.rows[0]
+    } catch (error) {
+      throw error
+    }
+  }
+
   public async registry(email: string, password: string) {
     try {
       // Hash Password

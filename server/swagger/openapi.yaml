@@ -3,6 +3,21 @@ info:
   title: Youtube Video Sharing API
   version: 0.0.1
 paths:
+  /api/account/info:
+      post:
+        security:
+          - bearerAuth: []
+        tags:
+          - account
+        responses:
+          '200':
+            description: Successful
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AccountInfoResponse'
+          '400':
+            description: Bad Request
   /api/account/registry:
     post:
       tags:
@@ -91,6 +106,19 @@ paths:
           description: Bad Request
 components:
   schemas:
+    AccountEntity:
+      type: object
+      properties:
+        email:
+          type: string
+    AccountInfoResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Get Info Successfully
+        data:
+          $ref: '#/components/schemas/AccountEntity'
     AccountRequestBody:
       type: object
       properties:
