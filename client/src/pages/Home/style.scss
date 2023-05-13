@@ -5,4 +5,14 @@
     align-items: center;
     row-gap: 2vh;
   }
+
+  .more-button{
+    width: 30vw;
+    height: 6vh;
+    button {
+      font-weight: bold;
+      height: 100%;
+      font-size: 2em;
+    }
+  }
 }

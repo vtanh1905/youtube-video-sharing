@@ -22,3 +22,8 @@ export const getAccountInfoApi = async (token: string) => {
   })
   return data
 }
+
+export const getVideosApi = async (limit: number, offset: number) => {
+  const { data } = await axiosInstance().get(`/video?limit=${limit}&offset=${offset}`)
+  return data
+}

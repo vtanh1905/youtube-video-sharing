@@ -20,9 +20,14 @@ const App = () => {
       getAccountInfoApi(token)
         .then((result) => {
           setUser(result.data)
+        })
+        .catch((error) => {
+          console.error(error)
+          // Clear Cookie if the token is not expire or not valid
+          cookies.remove('token')
+        }).finally(() => {
           setLoading(false)
         })
-        .catch(console.error)
     } else {
       setLoading(false)
     }
