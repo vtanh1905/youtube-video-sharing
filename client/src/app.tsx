@@ -5,12 +5,13 @@ import { FormInstance, notification } from 'antd'
 
 import routes from './routes'
 import { Layout, Authenticate } from './components'
-import { UserStore } from './stores'
+import { UserStore, VideoStore } from './stores'
 import { cookies, websocket } from './utils'
 import { getAccountInfoApi, loginApi } from './apis'
 
 const App = () => {
   const [user, setUser] = useContext(UserStore)
+  const [, setVideos] = useContext(VideoStore)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -39,6 +40,11 @@ const App = () => {
     if (user) {
       websocket.on('message', (data) => {
         if (user.email !== data.email) {
+          setVideos((preState: any) => {
+            const clone: any[] = JSON.parse(JSON.stringify(preState))
+            clone.unshift(data)
+            return clone
+          })
           notification.info({
             message: data.title,
             description: `Shared by ${data.email}`,

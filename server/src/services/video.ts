@@ -43,8 +43,10 @@ export class VideoService {
 
       // Emit Event New Video
       eventEmitter.emit('NEW_VIDEO', {
+        id: videoId,
         title,
-        email
+        email,
+        description
       })
     } catch (error) {
       throw error

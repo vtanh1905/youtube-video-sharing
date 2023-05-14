@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card, notification } from 'antd'
 import './style.scss'
 
 import { Video } from '../../components'
 import { getVideosApi } from '../../apis'
+import { VideoStore } from '../../stores';
 
 const HomePage = () => {
-  const [videos, setVideos] = useState([])
+  const [videos, setVideos] = useContext(VideoStore)
   const [disabledButton, setDisabledButton] = useState(false)
 
   // Call API to get videos
@@ -40,7 +41,7 @@ const HomePage = () => {
   return (
     <div className='home-page'>
       <div className='videos'>
-        {videos.map((value) => (
+        {videos.map((value: any) => (
           <Card key={value.id}>
             <Video videoId={value.id} title={value.title} shareBy={value.email} description={value.description} />
           </Card>
