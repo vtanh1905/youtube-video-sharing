@@ -7,7 +7,7 @@ import { postVideoValidator, getVideoValidator } from '../validators'
 
 const videoController: Router = Router()
 
-videoController.get('/', getVideoValidator, async (req: Request, res: Response, next: NextFunction) => {
+export const videoGet = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { limit, offset } = req.query
 
@@ -18,26 +18,24 @@ videoController.get('/', getVideoValidator, async (req: Request, res: Response, 
   } catch (error) {
     next(error)
   }
-})
+}
 
-videoController.post(
-  '/',
-  authenticateMiddleware,
-  postVideoValidator,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { url } = req.body
-      const { email } = (req as CustomRequest).user
+export const videoPost = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { url } = req.body
+    const { email } = (req as CustomRequest).user
 
-      await VideoService.getInstance().insert(url, email)
+    await VideoService.getInstance().insert(url, email)
 
-      res.json({
-        message: 'Share Video Successfully'
-      })
-    } catch (error) {
-      next(error)
-    }
+    res.json({
+      message: 'Share Video Successfully'
+    })
+  } catch (error) {
+    next(error)
   }
-)
+}
 
-export { videoController }
+videoController.get('/', getVideoValidator, videoGet)
+videoController.post('/', authenticateMiddleware, postVideoValidator, videoPost)
+
+export default videoController

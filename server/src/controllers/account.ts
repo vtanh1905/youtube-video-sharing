@@ -7,7 +7,7 @@ import { CustomRequest } from '../common'
 
 const accountController: Router = Router()
 
-accountController.post('/info', authenticateMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+export const accountGetInfo = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email } = (req as CustomRequest).user
 
@@ -18,9 +18,9 @@ accountController.post('/info', authenticateMiddleware, async (req: Request, res
   } catch (error) {
     next(error)
   }
-})
+}
 
-accountController.post('/registry', accountValidator, async (req: Request, res: Response, next: NextFunction) => {
+export const accountRegistry = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body
 
@@ -32,9 +32,9 @@ accountController.post('/registry', accountValidator, async (req: Request, res: 
   } catch (error) {
     next(error)
   }
-})
+}
 
-accountController.post('/login', accountValidator, async (req: Request, res: Response, next: NextFunction) => {
+export const accountLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body
 
@@ -47,6 +47,10 @@ accountController.post('/login', accountValidator, async (req: Request, res: Res
   } catch (error) {
     next(error)
   }
-})
+}
 
-export { accountController }
+accountController.post('/info', authenticateMiddleware, accountGetInfo)
+accountController.post('/registry', accountValidator, accountRegistry)
+accountController.post('/login', accountValidator, accountLogin)
+
+export default accountController
