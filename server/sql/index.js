@@ -1,11 +1,15 @@
 const { Pool } = require('pg')
 const fs = require('fs')
+const dotenv = require('dotenv');
+
+dotenv.config({ path: `${__dirname}/../../.env` })
 
 async function main() {
   try {
     console.log('Initialize Database: Start')
     const pool = new Pool({
-      connectionString: process.env.DATABASE_URL
+      connectionString: process.env.DATABASE_URL,
+      ssl: process.env.DATABASE_SSL === 'true' ? true : false 
     })
 
     // Drop Schema

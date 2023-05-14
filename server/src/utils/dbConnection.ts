@@ -6,7 +6,8 @@ export default class DBConnection {
   public static getInstance() {
     if (!DBConnection.#pool) {
       DBConnection.#pool = new Pool({
-        connectionString: process.env.DATABASE_URL
+        connectionString: process.env.DATABASE_URL,
+        ssl: process.env.DATABASE_SSL === 'true' ? true : false 
       })
     }
     return DBConnection.#pool

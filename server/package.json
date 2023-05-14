@@ -7,7 +7,7 @@
     "start": "node build/index.js",
     "build": "npx tsc",
     "test": "jest",
-    "database:init": "node -r dotenv/config sql/index.js"
+    "database:init": "node sql/index.js"
   },
   "keywords": [],
   "author": "vtanh1905@gmail.com",
