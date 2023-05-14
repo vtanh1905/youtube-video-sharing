@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import * as dotenv from 'dotenv'
 import express, { Express } from 'express'
 import * as swaggerUi from 'swagger-ui-express'
 import fs from 'fs'
@@ -10,6 +10,9 @@ import path from 'path'
 import { accountController, videoController } from './controllers'
 import { errorHandlerMiddleware } from './middlewares'
 import { webSocketListen } from './utils'
+
+// Read Environment variable from .env file
+dotenv.config({ path: `${__dirname}/../../.env` })
 
 const swaggerDocument = YAML.parse(fs.readFileSync(`${__dirname}/../swagger/openapi.yaml`, 'utf8'))
 

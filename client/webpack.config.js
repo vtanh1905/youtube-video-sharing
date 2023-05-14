@@ -1,10 +1,10 @@
-require('dotenv').config({ path: './.env' })
-const webpack = require('webpack')
+require('dotenv').config({ path: '../.env' })
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
-  mode: process.env.ENVIRONMENT,
+  mode: process.env.NODE_ENV,
   entry: './src/index.tsx',
   module: {
     rules: [
@@ -30,8 +30,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [{ from: path.join(__dirname, 'public') }]
     }),
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env)
+    new Dotenv({
+      path: path.join(__dirname, '../.env')
     })
   ],
   devServer: {
@@ -40,6 +40,6 @@ module.exports = {
     },
     historyApiFallback: true,
     compress: true,
-    port: process.env.PORT
+    port: process.env.PORT_WEBPACK_SERVER
   }
 }

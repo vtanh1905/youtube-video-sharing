@@ -16,7 +16,7 @@ async function main() {
     await pool.query(schemasSQL)
 
     // Run file seeds.sql if environment is not equal to production
-    if (process.env.ENVIRONMENT !== 'production') {
+    if (process.env.NODE_ENV !== 'production') {
       const seedsSQL = fs.readFileSync(__dirname + '/seeds.sql').toString()
       await pool.query(seedsSQL)
     }
