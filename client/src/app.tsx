@@ -47,6 +47,9 @@ const App = () => {
         }
       })
     }
+    return () => {
+      websocket.removeListener('message')
+    }
   }, [user])
 
   const onLogin = async (values: any, form: FormInstance) => {
