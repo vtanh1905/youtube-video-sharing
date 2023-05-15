@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node build/index.js",
     "build": "npx tsc",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "database:init": "node sql/index.js"
   },
   "keywords": [],
@@ -35,6 +35,7 @@
     "@types/pg": "^8.6.6",
     "@types/swagger-ui-express": "^4.1.3",
     "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
