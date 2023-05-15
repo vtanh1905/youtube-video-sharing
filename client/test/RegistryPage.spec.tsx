@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { BrowserRouter } from 'react-router-dom'
-import { RegistryPage } from '../src/pages'
+import RegistryPage from '../src/pages/Registry'
 
 const server = setupServer(
   rest.post('/account/registry', (req, res, ctx) => {
