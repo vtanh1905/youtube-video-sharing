@@ -9,5 +9,6 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "types": ["node", "jest", "@testing-library/jest-dom"],
-  }
+  },
+  "exclude": ["./test", "./setupTests.ts"]
 }
